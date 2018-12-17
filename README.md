@@ -6,8 +6,8 @@ dynamic write locks to detect and prevent re-entrancy attacks. For more
 information please refer to our paper *"Sereum: Protecting Existing Smart
 Contracts Against Re-Entrancy Attacks"* ([arxiv preprint](https://arxiv.org/abs/1812.05934)).
 
-For every type of attack pattern, this repository contains an small example
-implementation a vulnerable contract and an attack. The source code of the
+For every type of attack pattern, this repository contains a small example
+implementation of a vulnerable contract and an attack. The source code of the
 vulnerable and attacker contracts are contained in the `*.sol` files. We also
 provide a `*_setup.js` file for every example, which deploys the contracts on a
 dev blockchain and exploits the vulnerability in the example contract. The
