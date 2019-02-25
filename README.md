@@ -153,6 +153,7 @@ Vulnerabilities in a future versions of Sereum.
 | ECFChecker      | Yes |
 | Sereum          | No  |
 
+Another very simple example is the following contract, which is deployed on the Ethereum blockchain at [0xb7c5c5aa4d42967efe906e1b66cb8df9cebf04f7](https://etherscan.io/address/0xb7c5c5aa4d42967efe906e1b66cb8df9cebf04f7#code).
 
 ## Citing in Academic Work
 
