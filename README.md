@@ -162,7 +162,10 @@ Vulnerabilities in a future versions of Sereum.
 | Slither         | Yes |
 | Mythril         | Yes |
 | ECFChecker      | Yes |
-| Sereum          | No  |
+| Sereum          | ~~No~~ Yes<sup>1</sup> |
+
+* <sup>1</sup> We have extended Sereum to cover this type of re-entrancy by
+  tracking data-flow from storage variables to the parameters of calls.
 
 Another very simple example is the following contract, which is deployed on the Ethereum blockchain at [0xb7c5c5aa4d42967efe906e1b66cb8df9cebf04f7](https://etherscan.io/address/0xb7c5c5aa4d42967efe906e1b66cb8df9cebf04f7#code).
 
