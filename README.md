@@ -51,13 +51,14 @@ instruction as an external call, similar to the `CALL` instruction.
 ## Tested Tools
 
 The following table lists the tools and versions we tested. If the tool detects
-the test-case, we mark it with "Yes", otherwise "No". Mythril and Securify use
-a very conservative policy, that marks every state update after an external
-call. This would prevent all re-entrancy vulnerabilities, but also results in a
-high number of false positives. For example, for create-based re-entrancy
-vulnerabilities, it is highly likely that the creater of the contract, will
-want to modify the state (e.g., registering the address of the newly created
-contract).
+the test-case, we mark it with "Yes", otherwise "No". Mythril, Securify and
+Slither use a conservative policy, that marks every state update after an
+external call. This would prevent all re-entrancy vulnerabilities, but also
+results in a rather high number of false positives. For example, for
+create-based re-entrancy vulnerabilities, it is highly likely that the creater
+of the contract, will want to modify the state (e.g., registering the address
+of the newly created contract). Another example would be the use of manual
+locking with mutexes, which is always reported with this policy.
 
 | Tool          | Version     | Simple                 | Cross-Function         | Delegated | Create-based | 
 | ------------- | ----------- | ---------------------- | ---------------------- | --------- | ------------ |
@@ -65,6 +66,7 @@ contract).
 | Mythril       | v0.19.9     | Partial (conservative) | Partial (conservative) | No        | Partial (conservative) |
 | Securify      | 2018-08-01  | Partial (conservative) | Partial (conservative) | No        | No           |
 | Manticore<sup>2</sup> | 0.2.2 | Yes                  | Yes<sup>3</sup>        | No        | No           |
+| Slither<sup>5</sup> | 0.6.4 | Yes (conservative)     | Yes (conservative)     | Yes (conservative) | No  |
 | ECFChecker    | geth1.8port | Yes                    | Yes<sup>4</sup>        | Yes       | No           |
 | Sereum        |             | Yes                    | Yes                    | Yes       | Yes          |
 
@@ -80,6 +82,10 @@ contract).
 * <sup>4</sup> However, we crafted a different example for a cross-function
   re-entrancy attack that is not detected by ECFChecker. See the next section 
   for details.
+* <sup>5</sup> In contrast to the other tools Slither works on the Solidity
+  source code level. It has a similar policy to Mythril and Securify, i.e. it
+  reports any state update after an external call using either the low-level
+  Solidity `call` or `delegatecall` functions.
 
 
 ## Testcase: manual lock
@@ -104,12 +110,16 @@ Static analysis tools have a hard time correctly analysing the contracts. Oyente
 detects only the simple re-entrancy vulnerability and does not report the
 cross-function re-entrancy. Manticore on the other hand detects a re-entrancy
 bug in both the BuggyLock and SecureLock version, resulting in a false positive.
+Slither and Mythril mark any state update after an external call as a problem 
+and therefore report a problem with every of those contract, even though the 
+`SecureLock` variant is not exploitable.
 
 | Tool \ Testcase | NoLock   | BuggyLock | SecureLock | 
 | --------------- | -------- | --------- | ---------- |
 | Oyente          | Yes      | No        | No         |
 | Manticore       | Yes      | Yes       | Yes        |
 | Mythril         | Yes      | Yes       | Yes        |
+| Slither         | Yes      | Yes       | Yes        |
 | Expected        | Yes      | Yes       | No         |
 
 For the dynamic analysis tools, we use several combinations of vulnerable
@@ -149,6 +159,7 @@ Vulnerabilities in a future versions of Sereum.
 | --------------- | --- |
 | Oyente          | Yes |
 | Manticore       | Yes |
+| Slither         | Yes |
 | Mythril         | Yes |
 | ECFChecker      | Yes |
 | Sereum          | No  |
