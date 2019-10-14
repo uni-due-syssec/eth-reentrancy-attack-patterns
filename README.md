@@ -151,9 +151,9 @@ conditional jump (`JUMPI`) on the EVM level. While certainly unlikely it is
 possible to write a contract, which does not perform any check on anything
 before sending ether. In this example the functionality transfers all the ether
 a user has invested. This example is exploitable only with a re-entrancy
-vulnerability. Currently this example is not detected by Sereum, since we
+vulnerability. ~~Currently this example is not detected by Sereum, since we
 assume that this is a rather unlikely case. We plan to detect this kind of
-Vulnerabilities in a future versions of Sereum.
+vulnerabilities in a future versions of sereum.~~
 
 | Tool            | Detected | 
 | --------------- | --- |
